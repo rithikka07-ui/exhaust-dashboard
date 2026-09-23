@@ -9,11 +9,9 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
 } from "recharts";
 import {
   Zap,
-  TrendingDown,
   Sparkles,
   Award,
   Layers,
@@ -27,22 +25,22 @@ import {
   energyKpis,
 } from "../services/mockData";
 
-// Custom Dark Industrial Tooltip
+// Custom Light Industrial Tooltip
 function EnergyCustomTooltip({ active, payload, label, unit = "kWh" }) {
   if (active && payload && payload.length) {
     return (
-      <div className="rounded-lg bg-industrial-900 border border-industrial-700 p-2.5 shadow-xl text-xs font-mono">
-        <div className="text-zinc-400 font-semibold mb-1.5">{label}</div>
+      <div className="rounded-lg bg-white border border-slate-200 p-2.5 shadow-lg text-xs font-mono">
+        <div className="text-slate-500 font-semibold mb-1.5">{label}</div>
         {payload.map((item, idx) => (
           <div key={idx} className="flex items-center justify-between gap-3 py-0.5">
-            <span className="flex items-center gap-1.5 text-zinc-300">
+            <span className="flex items-center gap-1.5 text-slate-600">
               <span
                 className="w-2 h-2 rounded-full"
                 style={{ backgroundColor: item.color }}
               />
               {item.name}:
             </span>
-            <span className="font-bold text-white">
+            <span className="font-bold text-slate-900">
               {item.value} {unit}
             </span>
           </div>
@@ -54,45 +52,35 @@ function EnergyCustomTooltip({ active, payload, label, unit = "kWh" }) {
 }
 
 export default function EnergyChart() {
-  // Before vs After Automation Dataset (Comparing standard un-throttled manual 100% vs Smart VFD)
-  const beforeAfterComparison = [
-    {
-      category: "Daily Energy Demand",
-      manual: energyKpis.manualBaselineConsumption,
-      smart: energyKpis.todayConsumption,
-      saved: energyKpis.energySaved,
-    },
-  ];
-
   return (
     <div className="space-y-6">
       {/* Prominent Narrative Callout Banner */}
-      <div className="rounded-xl bg-gradient-to-r from-emerald-950/70 via-industrial-900 to-emerald-950/70 border border-emerald-500/40 p-4 sm:p-5 flex flex-col md:flex-row items-center justify-between gap-4 shadow-subtle-glow">
+      <div className="rounded-xl bg-gradient-to-r from-emerald-50 via-white to-emerald-50 border border-emerald-200 p-4 sm:p-5 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xs">
         <div className="flex items-center gap-3.5">
-          <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shrink-0">
+          <div className="w-10 h-10 rounded-xl bg-emerald-100 border border-emerald-300 flex items-center justify-center text-emerald-700 shrink-0">
             <Award className="w-6 h-6" />
           </div>
           <div>
-            <div className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2">
+            <div className="text-xs font-mono font-bold text-emerald-700 uppercase tracking-wider flex items-center gap-2">
               <Sparkles className="w-3.5 h-3.5" /> Energy Optimization Verified
             </div>
-            <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">
+            <h3 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
               Smart control reduces unnecessary exhaust operation.
             </h3>
-            <p className="text-xs text-zinc-300 mt-0.5">
+            <p className="text-xs text-slate-600 mt-0.5">
               Automated sensor-triggered VFD modulation prevents commercial hoods from running at 100% power during idle and prep periods.
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-4 bg-industrial-950/80 px-4 py-2.5 rounded-lg border border-emerald-500/30 font-mono text-center shrink-0">
+        <div className="flex items-center gap-4 bg-white px-4 py-2.5 rounded-lg border border-emerald-200 font-mono text-center shrink-0 shadow-2xs">
           <div>
-            <div className="text-[10px] uppercase tracking-wider text-zinc-400 font-semibold">Today's Savings</div>
-            <div className="text-xl font-bold text-emerald-400">+{energyKpis.energySaved} kWh</div>
+            <div className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold">Today's Savings</div>
+            <div className="text-xl font-bold text-emerald-700">+{energyKpis.energySaved} kWh</div>
           </div>
-          <div className="border-l border-industrial-800 pl-4">
-            <div className="text-[10px] uppercase tracking-wider text-zinc-400 font-semibold">Reduction</div>
-            <div className="text-xl font-bold text-emerald-400">24.5%</div>
+          <div className="border-l border-slate-200 pl-4">
+            <div className="text-[10px] uppercase tracking-wider text-slate-500 font-semibold">Reduction</div>
+            <div className="text-xl font-bold text-emerald-700">24.5%</div>
           </div>
         </div>
       </div>
@@ -100,22 +88,22 @@ export default function EnergyChart() {
       {/* Grid of 4 Energy Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         {/* Chart 1: Daily Energy Consumption (7 Days) */}
-        <div className="rounded-xl bg-industrial-900 border border-industrial-750 p-4">
+        <div className="rounded-xl bg-white border border-slate-200 p-4 shadow-xs">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+              <div className="w-7 h-7 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600">
                 <BarChart3 className="w-4 h-4" />
               </div>
               <div>
-                <h4 className="text-xs font-bold text-white uppercase tracking-wider">
+                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                   Daily Energy Consumption
                 </h4>
-                <span className="text-[10px] text-zinc-400 font-mono">Last 7 Days (kWh)</span>
+                <span className="text-[10px] text-slate-500 font-mono">Last 7 Days (kWh)</span>
               </div>
             </div>
-            <div className="flex items-center gap-3 text-[10px] font-mono text-zinc-400">
+            <div className="flex items-center gap-3 text-[10px] font-mono text-slate-600">
               <span className="flex items-center gap-1">
-                <span className="w-2 h-2 rounded bg-zinc-600" /> Manual
+                <span className="w-2 h-2 rounded bg-slate-400" /> Manual
               </span>
               <span className="flex items-center gap-1">
                 <span className="w-2 h-2 rounded bg-emerald-500" /> Smart VFD
@@ -126,11 +114,11 @@ export default function EnergyChart() {
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={dailyEnergyHistory} margin={{ top: 10, right: 10, left: -15, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1f2c44" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
                 <XAxis dataKey="day" stroke="#64748b" fontSize={10} tickLine={false} fontFamily="monospace" />
                 <YAxis stroke="#64748b" fontSize={10} tickLine={false} fontFamily="monospace" />
                 <Tooltip content={<EnergyCustomTooltip unit="kWh" />} />
-                <Bar dataKey="manual" name="Manual Operation" fill="#475569" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="manual" name="Manual Operation" fill="#94a3b8" radius={[4, 4, 0, 0]} />
                 <Bar dataKey="smart" name="Smart Automation" fill="#10b981" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
@@ -138,22 +126,22 @@ export default function EnergyChart() {
         </div>
 
         {/* Chart 2: Before vs After Automation Comparison */}
-        <div className="rounded-xl bg-industrial-900 border border-industrial-750 p-4">
+        <div className="rounded-xl bg-white border border-slate-200 p-4 shadow-xs">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+              <div className="w-7 h-7 rounded-lg bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-600">
                 <Layers className="w-4 h-4" />
               </div>
               <div>
-                <h4 className="text-xs font-bold text-white uppercase tracking-wider">
+                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                   Before vs After Automation
                 </h4>
-                <span className="text-[10px] text-zinc-400 font-mono">
+                <span className="text-[10px] text-slate-500 font-mono">
                   Manual: 124 kWh vs Smart: 84.6 kWh
                 </span>
               </div>
             </div>
-            <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+            <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
               -31.8% LOAD REDUCTION
             </span>
           </div>
@@ -163,11 +151,11 @@ export default function EnergyChart() {
               {/* Manual baseline bar */}
               <div>
                 <div className="flex items-center justify-between text-xs font-mono mb-1.5">
-                  <span className="text-zinc-400">Manual Operation (Continuous High Speed)</span>
-                  <span className="text-zinc-300 font-bold">124.0 kWh</span>
+                  <span className="text-slate-600">Manual Operation (Continuous High Speed)</span>
+                  <span className="text-slate-800 font-bold">124.0 kWh</span>
                 </div>
-                <div className="w-full h-8 bg-industrial-800 rounded-lg overflow-hidden flex items-center px-3 border border-industrial-700">
-                  <div className="h-full bg-slate-600 rounded-l flex items-center px-2 text-[11px] font-mono text-zinc-200" style={{ width: '100%' }}>
+                <div className="w-full h-8 bg-slate-100 rounded-lg overflow-hidden flex items-center px-3 border border-slate-200">
+                  <div className="h-full bg-slate-400 rounded-l flex items-center px-2 text-[11px] font-mono text-white" style={{ width: '100%' }}>
                     100% Un-optimized Energy Baseline
                   </div>
                 </div>
@@ -176,18 +164,18 @@ export default function EnergyChart() {
               {/* Smart Automation bar */}
               <div>
                 <div className="flex items-center justify-between text-xs font-mono mb-1.5">
-                  <span className="text-emerald-400 font-semibold">Smart IoT Automated Operation</span>
-                  <span className="text-emerald-400 font-bold">84.6 kWh</span>
+                  <span className="text-emerald-700 font-semibold">Smart IoT Automated Operation</span>
+                  <span className="text-emerald-700 font-bold">84.6 kWh</span>
                 </div>
-                <div className="w-full h-8 bg-industrial-800 rounded-lg overflow-hidden flex items-center border border-emerald-500/30">
+                <div className="w-full h-8 bg-slate-100 rounded-lg overflow-hidden flex items-center border border-emerald-300">
                   <div
-                    className="h-full bg-emerald-500 flex items-center px-3 text-[11px] font-mono font-bold text-industrial-950 transition-all duration-700"
+                    className="h-full bg-emerald-500 flex items-center px-3 text-[11px] font-mono font-bold text-white transition-all duration-700"
                     style={{ width: `${(84.6 / 124.0) * 100}%` }}
                   >
                     68.2% Consumed
                   </div>
                   <div
-                    className="h-full bg-emerald-950/80 border-l border-emerald-500/40 flex items-center px-3 text-[11px] font-mono font-bold text-emerald-400"
+                    className="h-full bg-emerald-50 border-l border-emerald-300 flex items-center px-3 text-[11px] font-mono font-bold text-emerald-800"
                     style={{ width: `${(39.4 / 124.0) * 100}%` }}
                   >
                     31.8% Saved (39.4 kWh)
@@ -197,43 +185,43 @@ export default function EnergyChart() {
             </div>
 
             {/* Quick Metrics Summary Footnote */}
-            <div className="grid grid-cols-3 gap-2 pt-3 border-t border-industrial-800 text-center font-mono text-xs">
-              <div className="p-2 rounded bg-industrial-950/60 border border-industrial-800">
-                <div className="text-[10px] text-zinc-400">Manual Baseline</div>
-                <div className="font-bold text-zinc-300">124.0 kWh</div>
+            <div className="grid grid-cols-3 gap-2 pt-3 border-t border-slate-100 text-center font-mono text-xs">
+              <div className="p-2 rounded bg-slate-50 border border-slate-200">
+                <div className="text-[10px] text-slate-500">Manual Baseline</div>
+                <div className="font-bold text-slate-800">124.0 kWh</div>
               </div>
-              <div className="p-2 rounded bg-industrial-950/60 border border-industrial-800">
-                <div className="text-[10px] text-zinc-400">Smart Consumed</div>
-                <div className="font-bold text-emerald-400">84.6 kWh</div>
+              <div className="p-2 rounded bg-slate-50 border border-slate-200">
+                <div className="text-[10px] text-slate-500">Smart Consumed</div>
+                <div className="font-bold text-emerald-700">84.6 kWh</div>
               </div>
-              <div className="p-2 rounded bg-emerald-950/30 border border-emerald-500/30">
-                <div className="text-[10px] text-emerald-400">Net Conserved</div>
-                <div className="font-bold text-emerald-300">27.4 kWh (₹720)</div>
+              <div className="p-2 rounded bg-emerald-50 border border-emerald-200">
+                <div className="text-[10px] text-emerald-700">Net Conserved</div>
+                <div className="font-bold text-emerald-800">27.4 kWh (₹720)</div>
               </div>
             </div>
           </div>
         </div>
 
         {/* Chart 3: Hourly Power Consumption (24 Hours Profile) */}
-        <div className="rounded-xl bg-industrial-900 border border-industrial-750 p-4">
+        <div className="rounded-xl bg-white border border-slate-200 p-4 shadow-xs">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
+              <div className="w-7 h-7 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600">
                 <Clock className="w-4 h-4" />
               </div>
               <div>
-                <h4 className="text-xs font-bold text-white uppercase tracking-wider">
+                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                   Hourly Power Consumption Profile
                 </h4>
-                <span className="text-[10px] text-zinc-400 font-mono">Kitchen Operating Shift (kW)</span>
+                <span className="text-[10px] text-slate-500 font-mono">Kitchen Operating Shift (kW)</span>
               </div>
             </div>
-            <div className="flex items-center gap-3 text-[10px] font-mono text-zinc-400">
+            <div className="flex items-center gap-3 text-[10px] font-mono text-slate-600">
               <span className="flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-slate-500" /> Manual
+                <span className="w-2 h-2 rounded-full bg-slate-400" /> Manual
               </span>
               <span className="flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-emerald-400" /> Smart VFD
+                <span className="w-2 h-2 rounded-full bg-emerald-500" /> Smart VFD
               </span>
             </div>
           </div>
@@ -241,7 +229,7 @@ export default function EnergyChart() {
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={hourlyPowerData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1f2c44" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
                 <XAxis dataKey="hour" stroke="#64748b" fontSize={10} tickLine={false} fontFamily="monospace" />
                 <YAxis stroke="#64748b" fontSize={10} tickLine={false} fontFamily="monospace" />
                 <Tooltip content={<EnergyCustomTooltip unit="kW" />} />
@@ -249,7 +237,7 @@ export default function EnergyChart() {
                   type="monotone"
                   dataKey="manualKw"
                   name="Manual Constant Power"
-                  stroke="#64748b"
+                  stroke="#94a3b8"
                   strokeDasharray="4 4"
                   strokeWidth={1.5}
                   dot={false}
@@ -258,7 +246,7 @@ export default function EnergyChart() {
                   type="monotone"
                   dataKey="smartKw"
                   name="Smart Automated Power"
-                  stroke="#10b981"
+                  stroke="#059669"
                   strokeWidth={2.5}
                   dot={false}
                   activeDot={{ r: 4 }}
@@ -269,20 +257,20 @@ export default function EnergyChart() {
         </div>
 
         {/* Chart 4: Energy Consumption by Hood */}
-        <div className="rounded-xl bg-industrial-900 border border-industrial-750 p-4">
+        <div className="rounded-xl bg-white border border-slate-200 p-4 shadow-xs">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+              <div className="w-7 h-7 rounded-lg bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-600">
                 <Zap className="w-4 h-4" />
               </div>
               <div>
-                <h4 className="text-xs font-bold text-white uppercase tracking-wider">
+                <h4 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                   Energy Consumption by Hood
                 </h4>
-                <span className="text-[10px] text-zinc-400 font-mono">Hood 01 to Hood 12 (kWh)</span>
+                <span className="text-[10px] text-slate-500 font-mono">Hood 01 to Hood 12 (kWh)</span>
               </div>
             </div>
-            <span className="text-[10px] font-mono text-emerald-400 font-semibold">
+            <span className="text-[10px] font-mono text-emerald-700 font-semibold">
               12 ACTIVE ZONES
             </span>
           </div>
@@ -290,7 +278,7 @@ export default function EnergyChart() {
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={hoodEnergyBreakdown} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1f2c44" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
                 <XAxis dataKey="hood" stroke="#64748b" fontSize={10} tickLine={false} fontFamily="monospace" />
                 <YAxis stroke="#64748b" fontSize={10} tickLine={false} fontFamily="monospace" />
                 <Tooltip content={<EnergyCustomTooltip unit="kWh" />} />

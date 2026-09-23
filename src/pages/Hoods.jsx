@@ -2,13 +2,9 @@ import React, { useState, useMemo } from "react";
 import {
   Fan,
   Search,
-  Filter,
   Sparkles,
   Power,
   RotateCcw,
-  Zap,
-  CheckCircle2,
-  AlertTriangle,
 } from "lucide-react";
 import { useHoods } from "../context/HoodContext";
 import HoodCard from "../components/HoodCard";
@@ -51,17 +47,17 @@ export default function Hoods() {
   return (
     <div className="space-y-6 animate-fade-in pb-12">
       {/* Top Banner & Batch Operations */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 sm:p-5 rounded-xl bg-industrial-900 border border-industrial-750">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 sm:p-5 rounded-xl bg-white border border-slate-200 shadow-xs">
         <div>
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+            <div className="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600">
               <Fan className="w-4 h-4" />
             </div>
-            <h1 className="text-base sm:text-lg font-bold text-white tracking-tight">
+            <h1 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
               Commercial Kitchen Exhaust Network (12 Hoods)
             </h1>
           </div>
-          <p className="text-xs text-zinc-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             Centralized management across Hot Lines, Fryers, Bakery, and Preparation zones
           </p>
         </div>
@@ -70,27 +66,27 @@ export default function Hoods() {
         <div className="flex flex-wrap items-center gap-2">
           <button
             onClick={() => batchSetMode("AUTO")}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-mono font-bold bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/40 transition-all"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-mono font-bold bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 transition-all shadow-2xs"
             title="Set all 12 hoods to automated activity-driven mode"
           >
-            <Sparkles className="w-3.5 h-3.5" />
+            <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
             <span>All to Auto</span>
           </button>
 
           <button
             onClick={() => batchSetMode("MANUAL")}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-mono font-bold bg-industrial-800 hover:bg-industrial-750 text-amber-300 border border-amber-500/30 transition-all"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-mono font-bold bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 transition-all shadow-2xs"
             title="Switch all 12 hoods to manual speed override"
           >
-            <RotateCcw className="w-3.5 h-3.5" />
+            <RotateCcw className="w-3.5 h-3.5 text-amber-600" />
             <span>All to Manual</span>
           </button>
 
           <button
             onClick={() => batchSetPower(true)}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-mono font-bold bg-industrial-800 hover:bg-industrial-750 text-zinc-200 border border-industrial-700 transition-all"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-mono font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-300 transition-all shadow-2xs"
           >
-            <Power className="w-3.5 h-3.5 text-emerald-400" />
+            <Power className="w-3.5 h-3.5 text-emerald-600" />
             <span>Power All On</span>
           </button>
         </div>
@@ -98,37 +94,37 @@ export default function Hoods() {
 
       {/* Network Stats Bar */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <div className="p-3 rounded-lg bg-industrial-900 border border-industrial-750">
-          <span className="text-[10px] uppercase font-bold tracking-wider text-zinc-400">Total Network</span>
-          <div className="font-mono text-xl font-bold text-white mt-1">{totalHoods} Units</div>
+        <div className="p-3 rounded-lg bg-white border border-slate-200 shadow-2xs">
+          <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500">Total Network</span>
+          <div className="font-mono text-xl font-bold text-slate-900 mt-1">{totalHoods} Units</div>
         </div>
-        <div className="p-3 rounded-lg bg-industrial-900 border border-industrial-750">
-          <span className="text-[10px] uppercase font-bold tracking-wider text-zinc-400">Active Operational</span>
-          <div className="font-mono text-xl font-bold text-emerald-400 mt-1">{activeHoods} Active</div>
+        <div className="p-3 rounded-lg bg-white border border-slate-200 shadow-2xs">
+          <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500">Active Operational</span>
+          <div className="font-mono text-xl font-bold text-emerald-700 mt-1">{activeHoods} Active</div>
         </div>
-        <div className="p-3 rounded-lg bg-industrial-900 border border-industrial-750">
-          <span className="text-[10px] uppercase font-bold tracking-wider text-zinc-400">Current Power Draw</span>
-          <div className="font-mono text-xl font-bold text-emerald-400 mt-1">{currentTotalPower} kW</div>
+        <div className="p-3 rounded-lg bg-white border border-slate-200 shadow-2xs">
+          <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500">Current Power Draw</span>
+          <div className="font-mono text-xl font-bold text-emerald-700 mt-1">{currentTotalPower} kW</div>
         </div>
-        <div className="p-3 rounded-lg bg-industrial-900 border border-industrial-750">
-          <span className="text-[10px] uppercase font-bold tracking-wider text-zinc-400">Automation Rate</span>
-          <div className="font-mono text-xl font-bold text-cyan-400 mt-1">
+        <div className="p-3 rounded-lg bg-white border border-slate-200 shadow-2xs">
+          <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500">Automation Rate</span>
+          <div className="font-mono text-xl font-bold text-sky-700 mt-1">
             {Math.round((hoods.filter(h => h.mode === "AUTO").length / totalHoods) * 100)}% Auto
           </div>
         </div>
       </div>
 
       {/* Search & Filter Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-industrial-900 border border-industrial-750">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-white border border-slate-200 shadow-xs">
         {/* Search input */}
         <div className="relative flex-1 max-w-md">
-          <Search className="w-4 h-4 text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             placeholder="Search by Hood ID (H01), station name, or kitchen zone..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-3 py-1.5 bg-industrial-800 border border-industrial-700 rounded-lg text-xs font-mono text-zinc-200 placeholder:text-zinc-500 focus:outline-none focus:border-emerald-500"
+            className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-300 rounded-lg text-xs font-mono text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-emerald-500 font-medium"
           />
         </div>
 
@@ -138,7 +134,7 @@ export default function Hoods() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="bg-industrial-800 border border-industrial-700 rounded-lg px-2.5 py-1.5 text-xs font-mono text-zinc-300 focus:outline-none focus:border-emerald-500"
+            className="bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs font-mono text-slate-700 focus:outline-none focus:border-emerald-500 font-semibold"
           >
             <option value="all">Status: All</option>
             <option value="active">Active Only</option>
@@ -150,7 +146,7 @@ export default function Hoods() {
           <select
             value={activityFilter}
             onChange={(e) => setActivityFilter(e.target.value)}
-            className="bg-industrial-800 border border-industrial-700 rounded-lg px-2.5 py-1.5 text-xs font-mono text-zinc-300 focus:outline-none focus:border-emerald-500"
+            className="bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs font-mono text-slate-700 focus:outline-none focus:border-emerald-500 font-semibold"
           >
             <option value="all">Activity: All</option>
             <option value="high">High Activity</option>
@@ -162,7 +158,7 @@ export default function Hoods() {
 
       {/* 12 Hoods Grid */}
       {filteredHoods.length === 0 ? (
-        <div className="text-center py-12 rounded-xl bg-industrial-900 border border-industrial-750 text-zinc-400 font-mono text-xs">
+        <div className="text-center py-12 rounded-xl bg-white border border-slate-200 text-slate-500 font-mono text-xs shadow-xs">
           No hoods match the selected search or filter criteria.
         </div>
       ) : (

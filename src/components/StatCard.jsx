@@ -7,43 +7,43 @@ export default function StatCard({
   unit = "",
   icon: Icon,
   trend,
-  trendDirection = "neutral", // "up" | "down" | "neutral"
-  trendColor = "green", // "green" | "yellow" | "red" | "blue"
+  trendDirection = "neutral",
+  trendColor = "green",
   subtext,
   onClick,
 }) {
   const getTrendColorClass = () => {
     switch (trendColor) {
       case "green":
-        return "text-emerald-400 bg-emerald-500/10 border-emerald-500/20";
+        return "text-emerald-700 bg-emerald-50 border-emerald-200";
       case "yellow":
-        return "text-amber-400 bg-amber-500/10 border-amber-500/20";
+        return "text-amber-700 bg-amber-50 border-amber-200";
       case "red":
-        return "text-rose-400 bg-rose-500/10 border-rose-500/20";
+        return "text-rose-700 bg-rose-50 border-rose-200";
       case "blue":
       default:
-        return "text-cyan-400 bg-cyan-500/10 border-cyan-500/20";
+        return "text-sky-700 bg-sky-50 border-sky-200";
     }
   };
 
   const getIconColorClass = () => {
     switch (trendColor) {
       case "green":
-        return "text-emerald-400 bg-emerald-500/10 border-emerald-500/30";
+        return "text-emerald-600 bg-emerald-50 border-emerald-200";
       case "yellow":
-        return "text-amber-400 bg-amber-500/10 border-amber-500/30";
+        return "text-amber-600 bg-amber-50 border-amber-200";
       case "red":
-        return "text-rose-400 bg-rose-500/10 border-rose-500/30";
+        return "text-rose-600 bg-rose-50 border-rose-200";
       case "blue":
       default:
-        return "text-cyan-400 bg-cyan-500/10 border-cyan-500/30";
+        return "text-sky-600 bg-sky-50 border-sky-200";
     }
   };
 
   return (
     <div
       onClick={onClick}
-      className={`relative overflow-hidden rounded-xl bg-industrial-900 border border-industrial-700/80 p-4 transition-all duration-200 hover:border-industrial-600 hover:shadow-industrial-card ${
+      className={`relative overflow-hidden rounded-xl bg-white border border-slate-200 p-4 transition-all duration-200 hover:border-slate-300 hover:shadow-md ${
         onClick ? "cursor-pointer" : ""
       }`}
     >
@@ -56,21 +56,21 @@ export default function StatCard({
             ? "bg-amber-500"
             : trendColor === "red"
             ? "bg-rose-500"
-            : "bg-cyan-500"
+            : "bg-sky-500"
         }`}
       />
 
       <div className="flex items-start justify-between">
         <div>
-          <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-400">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
             {title}
           </span>
           <div className="flex items-baseline gap-1.5 mt-1.5">
-            <span className="font-mono text-2xl sm:text-3xl font-bold tracking-tight text-white font-tabular">
+            <span className="font-mono text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 font-tabular">
               {value}
             </span>
             {unit && (
-              <span className="text-xs font-mono font-medium text-zinc-400">
+              <span className="text-xs font-mono font-medium text-slate-500">
                 {unit}
               </span>
             )}
@@ -86,7 +86,7 @@ export default function StatCard({
         )}
       </div>
 
-      <div className="mt-3 pt-2.5 border-t border-industrial-800/80 flex items-center justify-between text-xs">
+      <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs">
         {trend && (
           <div
             className={`flex items-center gap-1 px-2 py-0.5 rounded-full border text-[11px] font-mono font-bold ${getTrendColorClass()}`}
@@ -99,7 +99,7 @@ export default function StatCard({
         )}
 
         {subtext && (
-          <span className="text-[11px] text-zinc-400 truncate ml-auto font-medium">
+          <span className="text-[11px] text-slate-400 truncate ml-auto font-medium">
             {subtext}
           </span>
         )}

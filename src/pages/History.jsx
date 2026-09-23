@@ -2,9 +2,7 @@ import React, { useState, useMemo } from "react";
 import {
   History as HistoryIcon,
   Download,
-  Filter,
   Search,
-  Calendar,
   Layers,
   ChevronLeft,
   ChevronRight,
@@ -51,7 +49,7 @@ export default function History() {
     return filteredLogs.slice(start, start + itemsPerPage);
   }, [filteredLogs, currentPage, itemsPerPage]);
 
-  // Chart data from current filtered slice (reversed for chronological display)
+  // Chart data from current filtered slice
   const chartData = useMemo(() => {
     return [...filteredLogs.slice(0, 25)].reverse().map((item) => ({
       time: item.timestamp.split(",")[1]?.trim() || item.timestamp,
@@ -76,7 +74,7 @@ export default function History() {
       case "voc":
         return "#0284c7";
       case "power":
-        return "#10b981";
+        return "#059669";
       case "energy":
       default:
         return "#8b5cf6";
@@ -86,17 +84,17 @@ export default function History() {
   return (
     <div className="space-y-6 animate-fade-in pb-12">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 sm:p-5 rounded-xl bg-industrial-900 border border-industrial-750">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 sm:p-5 rounded-xl bg-white border border-slate-200 shadow-xs">
         <div>
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+            <div className="w-8 h-8 rounded-lg bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-600">
               <HistoryIcon className="w-4 h-4" />
             </div>
-            <h1 className="text-base sm:text-lg font-bold text-white tracking-tight">
+            <h1 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
               Historical Telemetry & Audit Logs
             </h1>
           </div>
-          <p className="text-xs text-zinc-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             Sensor database records, energy consumption audit trails, and compliance exports
           </p>
         </div>
@@ -104,7 +102,7 @@ export default function History() {
         {/* Working Export CSV Button */}
         <button
           onClick={handleExport}
-          className="flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-mono font-bold bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 shadow-subtle-glow transition-all"
+          className="flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-mono font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs transition-all"
         >
           <Download className="w-4 h-4" />
           <span>EXPORT CSV ({filteredLogs.length} Records)</span>
@@ -112,10 +110,10 @@ export default function History() {
       </div>
 
       {/* Filter Toolbar */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 p-3.5 rounded-xl bg-industrial-900 border border-industrial-750">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 p-3.5 rounded-xl bg-white border border-slate-200 shadow-xs">
         {/* Hood selector */}
         <div>
-          <label className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-1">
+          <label className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-1">
             Station Filter
           </label>
           <select
@@ -124,7 +122,7 @@ export default function History() {
               setSelectedHood(e.target.value);
               setCurrentPage(1);
             }}
-            className="w-full bg-industrial-800 border border-industrial-700 rounded-lg px-2.5 py-1.5 text-xs font-mono text-zinc-200 focus:outline-none focus:border-emerald-500"
+            className="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs font-mono text-slate-800 focus:outline-none focus:border-emerald-500 font-medium"
           >
             <option value="all">All Hoods Combined</option>
             {hoods.map((h) => (
@@ -137,13 +135,13 @@ export default function History() {
 
         {/* Sensor selector */}
         <div>
-          <label className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-1">
+          <label className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-1">
             Telemetry Metric
           </label>
           <select
             value={selectedSensor}
             onChange={(e) => setSelectedSensor(e.target.value)}
-            className="w-full bg-industrial-800 border border-industrial-700 rounded-lg px-2.5 py-1.5 text-xs font-mono text-zinc-200 focus:outline-none focus:border-emerald-500"
+            className="w-full bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs font-mono text-slate-800 focus:outline-none focus:border-emerald-500 font-medium"
           >
             <option value="temperature">Temperature (°C)</option>
             <option value="smoke">Smoke Density (%)</option>
@@ -155,11 +153,11 @@ export default function History() {
 
         {/* Search */}
         <div className="sm:col-span-2">
-          <label className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-1">
+          <label className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-1">
             Search Timestamp / Status
           </label>
           <div className="relative">
-            <Search className="w-4 h-4 text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search timestamp, status, or activity..."
@@ -168,29 +166,29 @@ export default function History() {
                 setSearchQuery(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full pl-9 pr-3 py-1.5 bg-industrial-800 border border-industrial-700 rounded-lg text-xs font-mono text-zinc-200 placeholder:text-zinc-500 focus:outline-none focus:border-emerald-500"
+              className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-300 rounded-lg text-xs font-mono text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-emerald-500 font-medium"
             />
           </div>
         </div>
       </div>
 
       {/* Historical Trend Chart */}
-      <div className="rounded-xl bg-industrial-900 border border-industrial-750 p-4">
+      <div className="rounded-xl bg-white border border-slate-200 p-4 shadow-xs">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+            <div className="w-7 h-7 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600">
               <Layers className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-xs font-bold text-white uppercase tracking-wider">
+              <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                 Historical Trend Curve: {selectedSensor.toUpperCase()}
               </h3>
-              <span className="text-[10px] text-zinc-400 font-mono">
+              <span className="text-[10px] text-slate-500 font-mono">
                 Showing recent {chartData.length} records for {selectedHood === "all" ? "All Hoods" : selectedHood}
               </span>
             </div>
           </div>
-          <span className="text-[11px] font-mono text-emerald-400 font-bold px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/30">
+          <span className="text-[11px] font-mono text-emerald-700 font-bold px-2 py-0.5 rounded bg-emerald-50 border border-emerald-300">
             AUDIT VERIFIED
           </span>
         </div>
@@ -200,15 +198,15 @@ export default function History() {
             <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
               <defs>
                 <linearGradient id="colorSensor" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor={getSensorColor()} stopOpacity={0.4} />
+                  <stop offset="5%" stopColor={getSensorColor()} stopOpacity={0.25} />
                   <stop offset="95%" stopColor={getSensorColor()} stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#1f2c44" vertical={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
               <XAxis dataKey="time" stroke="#64748b" fontSize={10} tickLine={false} fontFamily="monospace" />
               <YAxis stroke="#64748b" fontSize={10} tickLine={false} fontFamily="monospace" />
               <Tooltip
-                contentStyle={{ backgroundColor: "#0d121c", borderColor: "#25334c", fontSize: "12px", fontFamily: "monospace" }}
+                contentStyle={{ backgroundColor: "#ffffff", borderColor: "#e2e8f0", fontSize: "12px", fontFamily: "monospace", borderRadius: "8px", boxShadow: "0 4px 12px rgba(0,0,0,0.08)" }}
               />
               <Area
                 type="monotone"
@@ -225,15 +223,15 @@ export default function History() {
       </div>
 
       {/* Historical Data Table */}
-      <div className="rounded-xl bg-industrial-900 border border-industrial-750 overflow-hidden">
-        <div className="p-4 border-b border-industrial-800 flex items-center justify-between">
+      <div className="rounded-xl bg-white border border-slate-200 overflow-hidden shadow-xs">
+        <div className="p-4 border-b border-slate-200 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <FileSpreadsheet className="w-4 h-4 text-emerald-400" />
-            <h3 className="text-xs font-bold text-white uppercase tracking-wider">
+            <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
+            <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
               Telemetry Records Table
             </h3>
           </div>
-          <span className="text-xs font-mono text-zinc-400">
+          <span className="text-xs font-mono text-slate-500 font-medium">
             Showing {(currentPage - 1) * itemsPerPage + 1}–
             {Math.min(currentPage * itemsPerPage, filteredLogs.length)} of {filteredLogs.length} entries
           </span>
@@ -241,7 +239,7 @@ export default function History() {
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs font-mono">
-            <thead className="bg-industrial-950/80 border-b border-industrial-800 text-[11px] uppercase tracking-wider text-zinc-400">
+            <thead className="bg-slate-50 border-b border-slate-200 text-[11px] uppercase tracking-wider text-slate-600">
               <tr>
                 <th className="px-4 py-3">Timestamp</th>
                 <th className="px-4 py-3">Hood</th>
@@ -254,19 +252,19 @@ export default function History() {
                 <th className="px-4 py-3">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-industrial-800/60">
+            <tbody className="divide-y divide-slate-100">
               {paginatedLogs.map((row) => (
-                <tr key={row.id} className="hover:bg-industrial-850/60 transition-colors">
-                  <td className="px-4 py-2.5 text-zinc-300 whitespace-nowrap">{row.timestamp}</td>
-                  <td className="px-4 py-2.5 font-bold text-white whitespace-nowrap">{row.hoodId}</td>
+                <tr key={row.id} className="hover:bg-slate-50/80 transition-colors">
+                  <td className="px-4 py-2.5 text-slate-600 whitespace-nowrap">{row.timestamp}</td>
+                  <td className="px-4 py-2.5 font-bold text-slate-900 whitespace-nowrap">{row.hoodId}</td>
                   <td className="px-4 py-2.5 whitespace-nowrap">
                     <span
                       className={`font-bold ${
                         row.temperature >= 75
-                          ? "text-rose-400"
+                          ? "text-rose-600"
                           : row.temperature >= 55
-                          ? "text-amber-400"
-                          : "text-zinc-200"
+                          ? "text-amber-600"
+                          : "text-slate-800"
                       }`}
                     >
                       {row.temperature}°C
@@ -275,23 +273,23 @@ export default function History() {
                   <td className="px-4 py-2.5 whitespace-nowrap">
                     <span
                       className={`font-bold ${
-                        row.smoke >= 45 ? "text-rose-400" : row.smoke >= 25 ? "text-amber-400" : "text-zinc-200"
+                        row.smoke >= 45 ? "text-rose-600" : row.smoke >= 25 ? "text-amber-600" : "text-slate-800"
                       }`}
                     >
                       {row.smoke}%
                     </span>
                   </td>
-                  <td className="px-4 py-2.5 text-zinc-200 whitespace-nowrap">{row.voc} ppm</td>
-                  <td className="px-4 py-2.5 text-emerald-400 font-bold whitespace-nowrap">{row.power} kW</td>
-                  <td className="px-4 py-2.5 text-zinc-300 whitespace-nowrap">{row.energy} kWh</td>
+                  <td className="px-4 py-2.5 text-slate-700 whitespace-nowrap">{row.voc} ppm</td>
+                  <td className="px-4 py-2.5 text-emerald-700 font-bold whitespace-nowrap">{row.power} kW</td>
+                  <td className="px-4 py-2.5 text-slate-700 whitespace-nowrap">{row.energy} kWh</td>
                   <td className="px-4 py-2.5 whitespace-nowrap">
                     <span
                       className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
                         row.activity === "HIGH"
-                          ? "bg-rose-500/20 text-rose-400 border border-rose-500/30"
+                          ? "bg-rose-50 text-rose-700 border border-rose-200"
                           : row.activity === "MEDIUM"
-                          ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
-                          : "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30"
+                          ? "bg-amber-50 text-amber-700 border border-amber-200"
+                          : "bg-emerald-50 text-emerald-700 border border-emerald-200"
                       }`}
                     >
                       {row.activity}
@@ -301,8 +299,8 @@ export default function History() {
                     <span
                       className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
                         row.status === "ACTIVE"
-                          ? "bg-emerald-500/15 text-emerald-400"
-                          : "bg-zinc-800 text-zinc-400"
+                          ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                          : "bg-slate-100 text-slate-500 border border-slate-200"
                       }`}
                     >
                       {row.status}
@@ -315,24 +313,24 @@ export default function History() {
         </div>
 
         {/* Pagination Toolbar */}
-        <div className="p-3 border-t border-industrial-800 flex items-center justify-between text-xs font-mono">
-          <div className="text-zinc-400">
-            Page <span className="text-white font-bold">{currentPage}</span> of{" "}
-            <span className="text-white font-bold">{totalPages}</span>
+        <div className="p-3 border-t border-slate-200 flex items-center justify-between text-xs font-mono">
+          <div className="text-slate-500">
+            Page <span className="text-slate-900 font-bold">{currentPage}</span> of{" "}
+            <span className="text-slate-900 font-bold">{totalPages}</span>
           </div>
 
           <div className="flex items-center gap-1.5">
             <button
               onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
               disabled={currentPage === 1}
-              className="px-2.5 py-1 rounded bg-industrial-800 border border-industrial-700 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-industrial-750 text-zinc-200"
+              className="px-2.5 py-1 rounded bg-slate-100 border border-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-200 text-slate-700"
             >
               <ChevronLeft className="w-3.5 h-3.5" />
             </button>
             <button
               onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
               disabled={currentPage === totalPages}
-              className="px-2.5 py-1 rounded bg-industrial-800 border border-industrial-700 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-industrial-750 text-zinc-200"
+              className="px-2.5 py-1 rounded bg-slate-100 border border-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-200 text-slate-700"
             >
               <ChevronRight className="w-3.5 h-3.5" />
             </button>

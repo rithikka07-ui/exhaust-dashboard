@@ -7,7 +7,6 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ReferenceLine,
 } from "recharts";
 import {
@@ -16,31 +15,30 @@ import {
   Wind,
   Zap,
   Filter,
-  RefreshCw,
 } from "lucide-react";
 import { generateSensorTimeSeries } from "../services/mockData";
 import { useHoods } from "../context/HoodContext";
 
-// Custom dark industrial tooltip
+// Custom light industrial tooltip
 function CustomTooltip({ active, payload, label, unit, parameterName, threshold }) {
   if (active && payload && payload.length) {
     const value = payload[0].value;
     const isAbove = threshold && value >= threshold;
     return (
-      <div className="rounded-lg bg-industrial-900 border border-industrial-700 p-2.5 shadow-xl text-xs font-mono">
-        <div className="text-zinc-400 text-[10px] mb-1">{label}</div>
+      <div className="rounded-lg bg-white border border-slate-200 p-2.5 shadow-lg text-xs font-mono">
+        <div className="text-slate-500 text-[10px] mb-1 font-semibold">{label}</div>
         <div className="flex items-center gap-2">
-          <span className="font-semibold text-white">{parameterName}:</span>
+          <span className="font-semibold text-slate-700">{parameterName}:</span>
           <span
             className={`font-bold text-sm ${
-              isAbove ? "text-rose-400" : "text-emerald-400"
+              isAbove ? "text-rose-600" : "text-emerald-700"
             }`}
           >
             {value} {unit}
           </span>
         </div>
         {threshold && (
-          <div className="text-[10px] text-zinc-400 mt-1 border-t border-industrial-800 pt-1">
+          <div className="text-[10px] text-slate-500 mt-1 border-t border-slate-100 pt-1 font-medium">
             Safe Threshold: {threshold} {unit}
           </div>
         )}
@@ -56,7 +54,6 @@ export default function SensorChart({ defaultHood = "all", compact = false }) {
   const [timeRange, setTimeRange] = useState("1h");
   const [chartData, setChartData] = useState([]);
 
-  // Refresh / regenerate time series on tick or filter changes
   useEffect(() => {
     const data = generateSensorTimeSeries(timeRange, selectedHood);
     setChartData(data);
@@ -65,10 +62,10 @@ export default function SensorChart({ defaultHood = "all", compact = false }) {
   return (
     <div className="space-y-4">
       {/* Controls Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-industrial-900 border border-industrial-750">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-white border border-slate-200 shadow-xs">
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5 text-zinc-400 text-xs font-semibold uppercase tracking-wider">
-            <Filter className="w-3.5 h-3.5 text-emerald-400" />
+          <div className="flex items-center gap-1.5 text-slate-600 text-xs font-semibold uppercase tracking-wider">
+            <Filter className="w-3.5 h-3.5 text-emerald-600" />
             <span>Telemetry Filter:</span>
           </div>
 
@@ -76,7 +73,7 @@ export default function SensorChart({ defaultHood = "all", compact = false }) {
           <select
             value={selectedHood}
             onChange={(e) => setSelectedHood(e.target.value)}
-            className="bg-industrial-800 border border-industrial-700 rounded-lg px-2.5 py-1.5 text-xs font-mono text-zinc-200 focus:outline-none focus:border-emerald-500"
+            className="bg-slate-50 border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs font-mono text-slate-800 focus:outline-none focus:border-emerald-500 font-medium"
           >
             <option value="all">All Hoods Combined</option>
             {hoods.map((h) => (
@@ -88,7 +85,7 @@ export default function SensorChart({ defaultHood = "all", compact = false }) {
         </div>
 
         {/* Time Range Filter Buttons */}
-        <div className="flex items-center gap-1 bg-industrial-950 p-1 rounded-lg border border-industrial-750">
+        <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-lg border border-slate-200">
           {[
             { id: "1h", label: "1 Hour" },
             { id: "6h", label: "6 Hours" },
@@ -98,10 +95,10 @@ export default function SensorChart({ defaultHood = "all", compact = false }) {
             <button
               key={t.id}
               onClick={() => setTimeRange(t.id)}
-              className={`px-2.5 py-1 rounded text-xs font-mono font-medium transition-all ${
+              className={`px-2.5 py-1 rounded text-xs font-mono transition-all ${
                 timeRange === t.id
-                  ? "bg-industrial-800 text-emerald-400 border border-emerald-500/40 font-bold"
-                  : "text-zinc-400 hover:text-white"
+                  ? "bg-white text-emerald-700 border border-emerald-300 font-bold shadow-2xs"
+                  : "text-slate-600 hover:text-slate-900 font-medium"
               }`}
             >
               {t.label}
@@ -113,21 +110,21 @@ export default function SensorChart({ defaultHood = "all", compact = false }) {
       {/* 4 Line Charts Grid */}
       <div className={`grid grid-cols-1 ${compact ? "lg:grid-cols-2" : "xl:grid-cols-2"} gap-4`}>
         {/* 1. Temperature Chart */}
-        <div className="rounded-xl bg-industrial-900 border border-industrial-750 p-4">
+        <div className="rounded-xl bg-white border border-slate-200 p-4 shadow-xs">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400">
+              <div className="w-7 h-7 rounded-lg bg-rose-50 border border-rose-200 flex items-center justify-center text-rose-600">
                 <Thermometer className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="text-xs font-bold text-white uppercase tracking-wider">
+                <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                   Temperature History
                 </h3>
-                <span className="text-[10px] text-zinc-400 font-mono">Degrees Celsius (°C)</span>
+                <span className="text-[10px] text-slate-500 font-mono">Degrees Celsius (°C)</span>
               </div>
             </div>
-            <div className="flex items-center gap-1.5 text-[10px] font-mono text-emerald-400">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+            <div className="flex items-center gap-1.5 text-[10px] font-mono text-emerald-700 font-semibold">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
               LIVE TICK
             </div>
           </div>
@@ -135,7 +132,7 @@ export default function SensorChart({ defaultHood = "all", compact = false }) {
           <div className="h-56 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1f2c44" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
                 <XAxis
                   dataKey="time"
                   stroke="#64748b"
@@ -153,7 +150,7 @@ export default function SensorChart({ defaultHood = "all", compact = false }) {
                 <Tooltip
                   content={<CustomTooltip unit="°C" parameterName="Temperature" threshold={75} />}
                 />
-                <ReferenceLine y={75} stroke="#ef4444" strokeDasharray="3 3" label={{ value: 'CRITICAL (75°C)', fill: '#ef4444', fontSize: 9, position: 'insideTopRight' }} />
+                <ReferenceLine y={75} stroke="#ef4444" strokeDasharray="3 3" label={{ value: 'CRITICAL (75°C)', fill: '#dc2626', fontSize: 9, position: 'insideTopRight' }} />
                 <Line
                   type="monotone"
                   dataKey="temperature"
@@ -169,21 +166,21 @@ export default function SensorChart({ defaultHood = "all", compact = false }) {
         </div>
 
         {/* 2. Smoke Density Chart */}
-        <div className="rounded-xl bg-industrial-900 border border-industrial-750 p-4">
+        <div className="rounded-xl bg-white border border-slate-200 p-4 shadow-xs">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
+              <div className="w-7 h-7 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600">
                 <CloudFog className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="text-xs font-bold text-white uppercase tracking-wider">
+                <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                   Smoke Density
                 </h3>
-                <span className="text-[10px] text-zinc-400 font-mono">Optical Obscuration (%)</span>
+                <span className="text-[10px] text-slate-500 font-mono">Optical Obscuration (%)</span>
               </div>
             </div>
-            <div className="flex items-center gap-1.5 text-[10px] font-mono text-emerald-400">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+            <div className="flex items-center gap-1.5 text-[10px] font-mono text-emerald-700 font-semibold">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
               LIVE TICK
             </div>
           </div>
@@ -191,7 +188,7 @@ export default function SensorChart({ defaultHood = "all", compact = false }) {
           <div className="h-56 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1f2c44" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
                 <XAxis
                   dataKey="time"
                   stroke="#64748b"
@@ -209,7 +206,7 @@ export default function SensorChart({ defaultHood = "all", compact = false }) {
                 <Tooltip
                   content={<CustomTooltip unit="%" parameterName="Smoke Level" threshold={45} />}
                 />
-                <ReferenceLine y={45} stroke="#f59e0b" strokeDasharray="3 3" label={{ value: 'WARNING (45%)', fill: '#f59e0b', fontSize: 9, position: 'insideTopRight' }} />
+                <ReferenceLine y={45} stroke="#d97706" strokeDasharray="3 3" label={{ value: 'WARNING (45%)', fill: '#d97706', fontSize: 9, position: 'insideTopRight' }} />
                 <Line
                   type="monotone"
                   dataKey="smoke"
@@ -224,22 +221,22 @@ export default function SensorChart({ defaultHood = "all", compact = false }) {
           </div>
         </div>
 
-        {/* 3. VOC (Volatile Organic Compounds) Chart */}
-        <div className="rounded-xl bg-industrial-900 border border-industrial-750 p-4">
+        {/* 3. VOC Chart */}
+        <div className="rounded-xl bg-white border border-slate-200 p-4 shadow-xs">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+              <div className="w-7 h-7 rounded-lg bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-600">
                 <Wind className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="text-xs font-bold text-white uppercase tracking-wider">
+                <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                   VOC Concentration
                 </h3>
-                <span className="text-[10px] text-zinc-400 font-mono">Parts Per Million (ppm)</span>
+                <span className="text-[10px] text-slate-500 font-mono">Parts Per Million (ppm)</span>
               </div>
             </div>
-            <div className="flex items-center gap-1.5 text-[10px] font-mono text-emerald-400">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+            <div className="flex items-center gap-1.5 text-[10px] font-mono text-emerald-700 font-semibold">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
               LIVE TICK
             </div>
           </div>
@@ -247,7 +244,7 @@ export default function SensorChart({ defaultHood = "all", compact = false }) {
           <div className="h-56 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chartData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1f2c44" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
                 <XAxis
                   dataKey="time"
                   stroke="#64748b"
@@ -265,7 +262,7 @@ export default function SensorChart({ defaultHood = "all", compact = false }) {
                 <Tooltip
                   content={<CustomTooltip unit="ppm" parameterName="VOC" threshold={200} />}
                 />
-                <ReferenceLine y={200} stroke="#38bdf8" strokeDasharray="3 3" label={{ value: 'AIR PURGE (200 ppm)', fill: '#38bdf8', fontSize: 9, position: 'insideTopRight' }} />
+                <ReferenceLine y={200} stroke="#0284c7" strokeDasharray="3 3" label={{ value: 'AIR PURGE (200 ppm)', fill: '#0284c7', fontSize: 9, position: 'insideTopRight' }} />
                 <Line
                   type="monotone"
                   dataKey="voc"
@@ -281,21 +278,21 @@ export default function SensorChart({ defaultHood = "all", compact = false }) {
         </div>
 
         {/* 4. Power Demand Chart */}
-        <div className="rounded-xl bg-industrial-900 border border-industrial-750 p-4">
+        <div className="rounded-xl bg-white border border-slate-200 p-4 shadow-xs">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+              <div className="w-7 h-7 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600">
                 <Zap className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="text-xs font-bold text-white uppercase tracking-wider">
+                <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
                   Power Consumption
                 </h3>
-                <span className="text-[10px] text-zinc-400 font-mono">Active Power Demand (kW)</span>
+                <span className="text-[10px] text-slate-500 font-mono">Active Power Demand (kW)</span>
               </div>
             </div>
-            <div className="flex items-center gap-1.5 text-[10px] font-mono text-emerald-400">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+            <div className="flex items-center gap-1.5 text-[10px] font-mono text-emerald-700 font-semibold">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
               LIVE TICK
             </div>
           </div>
@@ -303,7 +300,7 @@ export default function SensorChart({ defaultHood = "all", compact = false }) {
           <div className="h-56 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1f2c44" vertical={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
                 <XAxis
                   dataKey="time"
                   stroke="#64748b"
@@ -324,10 +321,10 @@ export default function SensorChart({ defaultHood = "all", compact = false }) {
                 <Line
                   type="monotone"
                   dataKey="power"
-                  stroke="#10b981"
+                  stroke="#059669"
                   strokeWidth={2}
                   dot={false}
-                  activeDot={{ r: 4, fill: '#10b981', stroke: '#fff' }}
+                  activeDot={{ r: 4, fill: '#059669', stroke: '#fff' }}
                   isAnimationActive={false}
                 />
               </LineChart>

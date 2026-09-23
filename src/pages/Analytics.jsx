@@ -6,8 +6,6 @@ import {
   TrendingUp,
   IndianRupee,
   Percent,
-  Layers,
-  Award,
 } from "lucide-react";
 import { useHoods } from "../context/HoodContext";
 import StatCard from "../components/StatCard";
@@ -19,23 +17,23 @@ export default function Analytics() {
   return (
     <div className="space-y-6 animate-fade-in pb-12">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-4 sm:p-5 rounded-xl bg-industrial-900 border border-industrial-750">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-4 sm:p-5 rounded-xl bg-white border border-slate-200 shadow-xs">
         <div>
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+            <div className="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600">
               <Zap className="w-4 h-4" />
             </div>
-            <h1 className="text-base sm:text-lg font-bold text-white tracking-tight">
+            <h1 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
               Energy & Cost Optimization Analytics
             </h1>
           </div>
-          <p className="text-xs text-zinc-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             Real-world power savings achieved through dynamic demand-controlled ventilation (DCV)
           </p>
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-xs font-mono text-emerald-400 font-bold px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30">
+          <span className="text-xs font-mono text-emerald-700 font-bold px-3 py-1.5 rounded-lg bg-emerald-50 border border-emerald-300 shadow-2xs">
             ₹720 / Shift Estimated Savings
           </span>
         </div>

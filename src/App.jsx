@@ -18,7 +18,7 @@ export default function App() {
 
   return (
     <HoodProvider>
-      <div className="min-h-screen bg-industrial-950 text-zinc-100 flex flex-col antialiased">
+      <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col antialiased transition-colors duration-200">
         {/* Sidebar Navigation */}
         <Sidebar
           isOpen={isSidebarOpen}

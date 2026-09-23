@@ -5,7 +5,6 @@ import {
   Wind,
   Cpu,
   Fan,
-  ArrowRight,
   TrendingUp,
   TrendingDown,
   Sparkles,
@@ -23,7 +22,6 @@ export default function ActivityIndicator({ targetHoodId = "H01" }) {
     activityMessage,
   } = useHoods();
 
-  // Find sample hood (default H01)
   const hood = hoods.find((h) => h.id === targetHoodId) || hoods[0] || {};
 
   const isHigh = hood.activity === "HIGH";
@@ -34,26 +32,26 @@ export default function ActivityIndicator({ targetHoodId = "H01" }) {
   const savedPowerPercent = Math.max(0, 100 - currentSpeed);
 
   return (
-    <div className="rounded-xl bg-gradient-to-r from-industrial-900 via-industrial-850 to-industrial-900 border border-emerald-500/30 p-5 shadow-subtle-glow relative overflow-hidden">
-      {/* Background industrial grid overlay */}
-      <div className="absolute inset-0 industrial-grid-bg opacity-30 pointer-events-none" />
+    <div className="rounded-xl bg-gradient-to-r from-emerald-50/70 via-white to-emerald-50/70 border border-emerald-200 p-5 shadow-xs relative overflow-hidden transition-colors duration-200">
+      {/* Background grid overlay */}
+      <div className="absolute inset-0 industrial-grid-bg opacity-40 pointer-events-none" />
 
       {/* Section Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 relative z-10">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400">
+          <div className="w-8 h-8 rounded-lg bg-emerald-100 border border-emerald-300 flex items-center justify-center text-emerald-700">
             <Sparkles className="w-4 h-4 animate-spin-slow" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-sm font-bold text-white uppercase tracking-wider">
+              <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
                 Automated Causal Logic Chain
               </h2>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-industrial-800 text-zinc-300 border border-industrial-700 font-semibold">
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white text-slate-700 border border-slate-300 font-semibold shadow-2xs">
                 Target: {hood.id} ({hood.name})
               </span>
             </div>
-            <p className="text-xs text-zinc-400">
+            <p className="text-xs text-slate-500">
               Sensor Fusion → AI Activity Classification → Closed-Loop VFD Modulation
             </p>
           </div>
@@ -63,18 +61,18 @@ export default function ActivityIndicator({ targetHoodId = "H01" }) {
         <div className="flex items-center gap-2">
           <button
             onClick={() => triggerCookingSpike(hood.id)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/40 transition-all"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-white hover:bg-rose-50 text-rose-700 border border-rose-300 transition-all shadow-2xs"
             title="Simulate cooking burst: Wok ignition / high smoke"
           >
-            <TrendingUp className="w-3.5 h-3.5" />
+            <TrendingUp className="w-3.5 h-3.5 text-rose-600" />
             <span>Simulate Spike</span>
           </button>
           <button
             onClick={() => triggerCoolDown(hood.id)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 transition-all"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-bold bg-white hover:bg-emerald-50 text-emerald-700 border border-emerald-300 transition-all shadow-2xs"
             title="Simulate kitchen idle: Rapid cooldown"
           >
-            <TrendingDown className="w-3.5 h-3.5" />
+            <TrendingDown className="w-3.5 h-3.5 text-emerald-600" />
             <span>Simulate Cooldown</span>
           </button>
         </div>
@@ -85,14 +83,14 @@ export default function ActivityIndicator({ targetHoodId = "H01" }) {
         <div
           className={`mb-4 px-3 py-2 rounded-lg border text-xs font-mono flex items-center gap-2 transition-all animate-fade-in ${
             activityMessage.type === "spike"
-              ? "bg-rose-500/15 border-rose-500/30 text-rose-300"
-              : "bg-emerald-500/15 border-emerald-500/30 text-emerald-300"
+              ? "bg-rose-50 border-rose-300 text-rose-800"
+              : "bg-emerald-50 border-emerald-300 text-emerald-800"
           }`}
         >
           {activityMessage.type === "spike" ? (
-            <AlertTriangle className="w-4 h-4 shrink-0 text-rose-400" />
+            <AlertTriangle className="w-4 h-4 shrink-0 text-rose-600" />
           ) : (
-            <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400" />
+            <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
           )}
           <span className="font-semibold">{activityMessage.text}</span>
         </div>
@@ -101,76 +99,76 @@ export default function ActivityIndicator({ targetHoodId = "H01" }) {
       {/* 3-Step Visual Causal Workflow Pipeline */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3 relative z-10">
         {/* Step 1: Multi-Sensor Inputs */}
-        <div className="rounded-lg bg-industrial-950/80 border border-industrial-750 p-3.5 flex flex-col justify-between">
+        <div className="rounded-lg bg-white border border-slate-200 p-3.5 flex flex-col justify-between shadow-2xs">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
               1. IoT Multi-Sensor Influx
             </span>
-            <span className="text-[10px] font-mono text-emerald-400">ESP32 Node</span>
+            <span className="text-[10px] font-mono text-emerald-700 font-semibold">ESP32 Node</span>
           </div>
 
           <div className="space-y-2">
-            <div className="flex items-center justify-between text-xs py-1 border-b border-industrial-800">
-              <span className="flex items-center gap-1.5 text-zinc-400">
-                <Thermometer className="w-3.5 h-3.5 text-rose-400" /> Temp
+            <div className="flex items-center justify-between text-xs py-1 border-b border-slate-100">
+              <span className="flex items-center gap-1.5 text-slate-600">
+                <Thermometer className="w-3.5 h-3.5 text-rose-500" /> Temp
               </span>
-              <span className="font-mono font-bold text-white">{hood.temperature}°C</span>
+              <span className="font-mono font-bold text-slate-900">{hood.temperature}°C</span>
             </div>
-            <div className="flex items-center justify-between text-xs py-1 border-b border-industrial-800">
-              <span className="flex items-center gap-1.5 text-zinc-400">
-                <CloudFog className="w-3.5 h-3.5 text-amber-400" /> Smoke
+            <div className="flex items-center justify-between text-xs py-1 border-b border-slate-100">
+              <span className="flex items-center gap-1.5 text-slate-600">
+                <CloudFog className="w-3.5 h-3.5 text-amber-500" /> Smoke
               </span>
-              <span className="font-mono font-bold text-white">{hood.smoke}%</span>
+              <span className="font-mono font-bold text-slate-900">{hood.smoke}%</span>
             </div>
             <div className="flex items-center justify-between text-xs py-1">
-              <span className="flex items-center gap-1.5 text-zinc-400">
-                <Wind className="w-3.5 h-3.5 text-cyan-400" /> VOC
+              <span className="flex items-center gap-1.5 text-slate-600">
+                <Wind className="w-3.5 h-3.5 text-sky-500" /> VOC
               </span>
-              <span className="font-mono font-bold text-white">{hood.voc} ppm</span>
+              <span className="font-mono font-bold text-slate-900">{hood.voc} ppm</span>
             </div>
           </div>
         </div>
 
         {/* Step 2: Cooking Activity Engine */}
         <div
-          className={`rounded-lg p-3.5 flex flex-col justify-between border transition-all ${
+          className={`rounded-lg p-3.5 flex flex-col justify-between border transition-all shadow-2xs ${
             isHigh
-              ? "bg-rose-950/30 border-rose-500/40 shadow-alert-glow/20"
+              ? "bg-rose-50/80 border-rose-300"
               : isMed
-              ? "bg-amber-950/30 border-amber-500/40"
-              : "bg-emerald-950/30 border-emerald-500/40 shadow-subtle-glow/30"
+              ? "bg-amber-50/80 border-amber-300"
+              : "bg-emerald-50/80 border-emerald-300"
           }`}
         >
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600">
               2. Activity Detection
             </span>
-            <Cpu className="w-3.5 h-3.5 text-emerald-400" />
+            <Cpu className="w-3.5 h-3.5 text-emerald-600" />
           </div>
 
           <div className="text-center py-1">
-            <div className="text-[11px] uppercase tracking-wider text-zinc-400 mb-1">
+            <div className="text-[11px] uppercase tracking-wider text-slate-500 mb-1 font-semibold">
               Cooking Activity Level
             </div>
             <div
               className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-mono font-bold border ${
                 isHigh
-                  ? "bg-rose-500/20 text-rose-300 border-rose-500/50 animate-pulse"
+                  ? "bg-white text-rose-700 border-rose-300 shadow-2xs"
                   : isMed
-                  ? "bg-amber-500/20 text-amber-300 border-amber-500/50"
-                  : "bg-emerald-500/20 text-emerald-300 border-emerald-500/50"
+                  ? "bg-white text-amber-700 border-amber-300 shadow-2xs"
+                  : "bg-white text-emerald-700 border-emerald-300 shadow-2xs"
               }`}
             >
               <span
                 className={`w-2 h-2 rounded-full ${
-                  isHigh ? "bg-rose-400 animate-ping" : isMed ? "bg-amber-400" : "bg-emerald-400"
+                  isHigh ? "bg-rose-600 animate-ping" : isMed ? "bg-amber-600" : "bg-emerald-600"
                 }`}
               />
               {hood.activity} INTENSITY
             </div>
           </div>
 
-          <div className="text-[11px] text-zinc-400 text-center font-mono mt-2">
+          <div className="text-[11px] text-slate-600 text-center font-mono mt-2 font-medium">
             {isHigh
               ? "Active sauteeing/frying detected"
               : isMed
@@ -180,28 +178,28 @@ export default function ActivityIndicator({ targetHoodId = "H01" }) {
         </div>
 
         {/* Step 3: Automated Exhaust Optimization */}
-        <div className="rounded-lg bg-industrial-950/80 border border-industrial-750 p-3.5 flex flex-col justify-between">
+        <div className="rounded-lg bg-white border border-slate-200 p-3.5 flex flex-col justify-between shadow-2xs">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
               3. Exhaust Modulation
             </span>
-            <Fan className={`w-4 h-4 text-emerald-400 ${hood.isOn && hood.speed > 0 ? "animate-spin" : ""}`} />
+            <Fan className={`w-4 h-4 text-emerald-600 ${hood.isOn && hood.speed > 0 ? "animate-spin" : ""}`} />
           </div>
 
           <div className="space-y-1.5 my-auto">
             <div className="flex items-center justify-between text-xs">
-              <span className="text-zinc-400">Recommended:</span>
-              <span className="font-mono font-bold text-zinc-300">{recommendedSpeed}%</span>
+              <span className="text-slate-500 font-medium">Recommended:</span>
+              <span className="font-mono font-bold text-slate-800">{recommendedSpeed}%</span>
             </div>
             <div className="flex items-center justify-between text-xs">
-              <span className="text-zinc-400">Current Speed:</span>
-              <span className="font-mono font-bold text-emerald-400 text-sm">
+              <span className="text-slate-500 font-medium">Current Speed:</span>
+              <span className="font-mono font-bold text-emerald-700 text-sm">
                 {currentSpeed}%
               </span>
             </div>
 
             {/* Visual animated speed bar */}
-            <div className="w-full h-2 bg-industrial-800 rounded-full overflow-hidden mt-2">
+            <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden mt-2">
               <div
                 className={`h-full transition-all duration-700 ease-out rounded-full ${
                   isHigh ? "bg-rose-500" : isMed ? "bg-amber-500" : "bg-emerald-500"
@@ -211,11 +209,11 @@ export default function ActivityIndicator({ targetHoodId = "H01" }) {
             </div>
           </div>
 
-          <div className="flex items-center justify-between text-[11px] pt-2 border-t border-industrial-800 text-zinc-400">
-            <span className="flex items-center gap-1 text-emerald-400 font-mono font-semibold">
-              <Zap className="w-3 h-3" /> {savedPowerPercent}% Unnecessary Load Saved
+          <div className="flex items-center justify-between text-[11px] pt-2 border-t border-slate-100 text-slate-500">
+            <span className="flex items-center gap-1 text-emerald-700 font-mono font-semibold">
+              <Zap className="w-3 h-3 text-emerald-600" /> {savedPowerPercent}% Unnecessary Load Saved
             </span>
-            <span className="font-mono">{hood.power} kW</span>
+            <span className="font-mono text-slate-700 font-bold">{hood.power} kW</span>
           </div>
         </div>
       </div>
